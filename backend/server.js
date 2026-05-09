@@ -4,6 +4,8 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import pool from './db/index.js';
 import authRoutes from './routes/auth.js';
+import restaurantRoutes from './routes/restaurants.js';
+import reviewRoutes from './routes/reviews.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -38,6 +40,8 @@ app.get('/api/db-test', async (req, res) => {
 });
 
 app.use('/api/auth', authRoutes);
+app.use('/api/restaurants', restaurantRoutes);
+app.use('/api/reviews', reviewRoutes);
 
 app.listen(PORT, () => {
   console.log(`🥟 Backend server running on http://localhost:${PORT}`);
