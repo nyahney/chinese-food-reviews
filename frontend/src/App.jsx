@@ -9,7 +9,7 @@ function App() {
   useEffect(() => {
     async function checkHealth() {
       try {
-        const response = await fetch('http://localhost:3000/api/health');
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/health`);
         if (!response.ok) {
           throw new Error(`Server returned status ${response.status}`);
         }

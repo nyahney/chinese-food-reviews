@@ -10,8 +10,17 @@ import reviewRoutes from './routes/reviews.js';
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+const allowedOrigins = (process.env.ALLOWED_ORIGINS || 'http://localhost:5173')
+  .split(',')
+  .map(origin => origin.trim());
+
 const corsOptions = {
-  origin: 'http://localhost:5173',
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    return callback(new Error('Not allowed by CORS'));
+  },
   credentials: true,
 };
 
