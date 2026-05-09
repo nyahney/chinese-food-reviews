@@ -1,7 +1,9 @@
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 import pool from './db/index.js';
+import authRoutes from './routes/auth.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -13,6 +15,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(express.json());
+app.use(cookieParser());
 
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok' });
@@ -33,6 +36,8 @@ app.get('/api/db-test', async (req, res) => {
     });
   }
 });
+
+app.use('/api/auth', authRoutes);
 
 app.listen(PORT, () => {
   console.log(`🥟 Backend server running on http://localhost:${PORT}`);
